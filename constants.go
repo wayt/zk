@@ -32,6 +32,8 @@ const (
 	opClose           = -11
 	opSetAuth         = 100
 	opSetWatches      = 101
+	opSetWatches2     = 105
+	opAddWatch        = 106
 	opError           = -1
 	// Not in protocol, used internally
 	opWatcherEvent = -2
@@ -95,6 +97,27 @@ type State int32
 
 func (s State) String() string {
 	if name := stateNames[s]; name != "" {
+		return name
+	}
+	return "Unknown"
+}
+
+const (
+	WatchModePersistent          AddWatchMode = 0
+	WatchModePersistentRecursive AddWatchMode = 1
+)
+
+var (
+	addWatchModeNames = map[AddWatchMode]string{
+		WatchModePersistent:          "WatchModePersistent",
+		WatchModePersistentRecursive: "WatchModePersistentRecursive",
+	}
+)
+
+type AddWatchMode int32
+
+func (m AddWatchMode) String() string {
+	if name := addWatchModeNames[m]; name != "" {
 		return name
 	}
 	return "Unknown"
@@ -215,6 +238,8 @@ var (
 		opClose:           "close",
 		opSetAuth:         "setAuth",
 		opSetWatches:      "setWatches",
+		opSetWatches2:     "setWatches2",
+		opAddWatch:        "addWatch",
 
 		opWatcherEvent: "watcherEvent",
 	}
