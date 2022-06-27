@@ -191,7 +191,7 @@ func Connect(servers []string, sessionTimeout time.Duration, options ...connOpti
 	ec := make(chan Event, eventChanSize)
 	conn := &Conn{
 		dialer:         net.DialTimeout,
-		hostProvider:   &DNSHostProvider{},
+		hostProvider:   NewRefreshDNSHostProvider(),
 		conn:           nil,
 		state:          StateDisconnected,
 		eventChan:      ec,
